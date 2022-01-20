@@ -59,16 +59,18 @@
         let regexp = " ";
         for (i = 0; i < val.length; i++) {
             regexp += val.charAt(i);
-            if (i > 0 & i < val.length - 1) {
+            if (i > 0 && i < val.length - 1) {
                 regexp += "?";
             }
         }
-        regexp += " ";
-        console.log(regexp);
+        // console.log(regexp);
         let words_valid1 = Array.from(WORDS.matchAll(regexp + "? "), m => m[0]);
         let words_valid2 = Array.from(WORDS.matchAll(regexp + " "), m => m[0]);
+        // console.log(words_valid1);
+        // console.log(words_valid2);
         words_valid = words_valid1.concat(words_valid2);
         words_valid = words_valid.filter(onlyUnique);
+        console.log(words_valid);
         words_valid = words_valid.map(word => word.trim());
         words_valid = words_valid.filter(word => word.length > 2);
         words_valid.sort(function (a, b) {
@@ -101,7 +103,7 @@
 <div style="width:50%;">
     <h3 id="output" style="color: white;"></h3>
     <h4 id="placeholder" style="color: #c2fbd7;">Example: tree shrinkage <p style="color:#11998e">➡️ teenage, tinage,
-        triage, terne, thine, tinge, trike, trine, tsine, thae, tige, tike, tine, tree, tae, tee, the, tie</p></h4>
+        treeing, teenage, teeing, thring, tinage, triage, terne, thine, think, treen, trees, trike, trine, trink, tsine, tinge, teen, teer, tees, teng, teri, tern, thae, thig, thin, tige, tike, tine, ting, tink, trag, tree, trek, tres, trig, trin, tshi, tae, tag, tee, teg, ten, ter, the, tie, tig, tin, tri, trs, tsi, tsk</p></h4>
 </div>
 <!-- partial -->
 
