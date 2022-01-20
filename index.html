@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Acronym Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="words.txt" type="text/javascript"></script>
+</head>
+
+<script>
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
+    function process(val) {
+        val = val.toLowerCase();
+        val = val.replace(/\s/g, '');
+        // alert(val);
+        // $('#output').text("processing...");
+        let regexp = " ";
+        for (i = 0; i < val.length; i++) {
+            regexp += val.charAt(i);
+            if (i > 0 & i < val.length - 1) {
+                regexp += "?";
+            }
+        }
+        regexp += " ";
+        console.log(regexp);
+        let words_valid1 = Array.from(WORDS.matchAll(regexp + "? "), m => m[0]);
+        let words_valid2 = Array.from(WORDS.matchAll(regexp + " "), m => m[0]);
+        words_valid = words_valid1.concat(words_valid2);
+        words_valid = words_valid.filter(onlyUnique);
+        words_valid = words_valid.map(word => word.trim());
+        words_valid = words_valid.filter(word => word.length > 2);
+        words_valid.sort(function (a, b) {
+            return b.length - a.length;
+        });
+        if(words_valid.length > 0){
+            $('#output').text(words_valid.join(", "));
+        }
+        else{
+            $('#output').text("No acronyms of length greater than 2 found.");
+        }
+        $('#placeholder').text("");
+
+    }
+</script>
+<body>
+<!-- partial:index.partial.html -->
+<div style="width:50%;text-align: center;">
+    <h1 style="font-family: 'Superclarendon'; color: white; font-size: xxx-large;">Acronym-Generator</h1>
+    <h4 style="color: #c2fbd7;" style="width:50%;">Type in your method name to find all substrings in it that are valid
+        words.</h4>
+</div>
+
+<div class="form__group field">
+    <input type="input" class="form__field" placeholder="Method Name" name="method" id='method' required/>
+    <label for="method" class="form__label">Method Name (spaces / case will be ignored)</label>
+</div>
+<input class="button-33" type="button" name="go" value="Submit" onclick="process(document.getElementById('method').value)"/>
+<br/>
+<div style="width:50%;">
+    <h3 id="output" style="color: white;"></h3>
+    <h4 id="placeholder" style="color: #c2fbd7;">Example: tree shrinkage <p style="color:#11998e">➡️ teenage, tinage, triage, terne, thine, tinge, trike, trine, tsine, thae, tige, tike, tine, tree, tae, tee, the, tie</p></h4>
+</div>
+<!-- partial -->
+
+</body>
