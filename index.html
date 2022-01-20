@@ -5,9 +5,10 @@
     <title>Acronym Generator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./style.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="words.txt" type="text/javascript"></script>
+    <script src="words.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./style.css">
     <a href="https://github.com/csinva/acronym-generator" class="github-corner" aria-label="View source on GitHub">
         <svg width="140" height="140" viewBox="0 0 250 250"
              style="fill:#c2fbd7; color:#c2fbd7; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);"
@@ -19,31 +20,6 @@
                   fill="black" class="octo-body"></path>
         </svg>
     </a>
-    <style>.github-corner:hover .octo-arm {
-        animation: octocat-wave 560ms ease-in-out
-    }
-
-    @keyframes octocat-wave {
-        0%, 100% {
-            transform: rotate(0)
-        }
-        20%, 60% {
-            transform: rotate(-25deg)
-        }
-        40%, 80% {
-            transform: rotate(10deg)
-        }
-    }
-
-    @media (max-width: 500px) {
-        .github-corner:hover .octo-arm {
-            animation: none
-        }
-
-        .github-corner .octo-arm {
-            animation: octocat-wave 560ms ease-in-out
-        }
-    }</style>
 </head>
 
 <script>
@@ -70,14 +46,24 @@
         // console.log(words_valid2);
         words_valid = words_valid1.concat(words_valid2);
         words_valid = words_valid.filter(onlyUnique);
-        console.log(words_valid);
+        // console.log(words_valid);
         words_valid = words_valid.map(word => word.trim());
         words_valid = words_valid.filter(word => word.length > 2);
         words_valid.sort(function (a, b) {
             return b.length - a.length;
         });
         if (words_valid.length > 0) {
-            $('#output').text(words_valid.join(", "));
+            let text = "";
+            for (let word of words_valid) {
+                text += "<a href='https://www.google.com/search?q="
+                text += word;
+                text += "+definition'>"
+                text += word;
+                text += "</a>"
+                text += "  ";
+            }
+            console.log(text);
+            $('#output').html(text.substring(0, text.length - 2));
         } else {
             $('#output').text("No acronyms of length greater than 2 found.");
         }
@@ -93,17 +79,71 @@
         words.</h4>
 </div>
 
-<div class="form__group field">
+<div class="form__group field" style="padding-bottom: 10px;">
     <input type="input" class="form__field" placeholder="Method Name" name="method" id='method' required/>
-    <label for="method" class="form__label">Method Name (spaces / case will be ignored)</label>
+    <label for="method" class="form__label">Method Name (spaces / case ignored)</label>
 </div>
 <input class="button-33" type="button" name="go" value="Submit"
        onclick="process(document.getElementById('method').value)"/>
 <br/>
 <div style="width:50%;">
-    <h3 id="output" style="color: white;"></h3>
-    <h4 id="placeholder" style="color: #c2fbd7;">Example: tree shrinkage <p style="color:#11998e">➡️ teenage, tinage,
-        treeing, teenage, teeing, thring, tinage, triage, terne, thine, think, treen, trees, trike, trine, trink, tsine, tinge, teen, teer, tees, teng, teri, tern, thae, thig, thin, tige, tike, tine, ting, tink, trag, tree, trek, tres, trig, trin, tshi, tae, tag, tee, teg, ten, ter, the, tie, tig, tin, tri, trs, tsi, tsk</p></h4>
+    <h3 id="output" style="color: #11998e;"></h3>
+    <h4 id="placeholder" style="color: #c2fbd7;">
+        <p style="display:inline;color:grey;">Example</p>: Tree Shrinkage
+        <p style="color:#11998e;padding-left: 5%;padding-right: 5%;">
+            ➡️ <a href='https://www.google.com/search?q=treeing+definition'>treeing</a> <a
+                href='https://www.google.com/search?q=teenage+definition'>teenage</a> <a
+                href='https://www.google.com/search?q=teeing+definition'>teeing</a> <a
+                href='https://www.google.com/search?q=thring+definition'>thring</a> <a
+                href='https://www.google.com/search?q=tinage+definition'>tinage</a> <a
+                href='https://www.google.com/search?q=triage+definition'>triage</a> <a
+                href='https://www.google.com/search?q=terne+definition'>terne</a> <a
+                href='https://www.google.com/search?q=thine+definition'>thine</a> <a
+                href='https://www.google.com/search?q=think+definition'>think</a> <a
+                href='https://www.google.com/search?q=treen+definition'>treen</a> <a
+                href='https://www.google.com/search?q=trees+definition'>trees</a> <a
+                href='https://www.google.com/search?q=trike+definition'>trike</a> <a
+                href='https://www.google.com/search?q=trine+definition'>trine</a> <a
+                href='https://www.google.com/search?q=trink+definition'>trink</a> <a
+                href='https://www.google.com/search?q=tsine+definition'>tsine</a> <a
+                href='https://www.google.com/search?q=tinge+definition'>tinge</a> <a
+                href='https://www.google.com/search?q=teen+definition'>teen</a> <a
+                href='https://www.google.com/search?q=teer+definition'>teer</a> <a
+                href='https://www.google.com/search?q=tees+definition'>tees</a> <a
+                href='https://www.google.com/search?q=teng+definition'>teng</a> <a
+                href='https://www.google.com/search?q=teri+definition'>teri</a> <a
+                href='https://www.google.com/search?q=tern+definition'>tern</a> <a
+                href='https://www.google.com/search?q=thae+definition'>thae</a> <a
+                href='https://www.google.com/search?q=thig+definition'>thig</a> <a
+                href='https://www.google.com/search?q=thin+definition'>thin</a> <a
+                href='https://www.google.com/search?q=tige+definition'>tige</a> <a
+                href='https://www.google.com/search?q=tike+definition'>tike</a> <a
+                href='https://www.google.com/search?q=tine+definition'>tine</a> <a
+                href='https://www.google.com/search?q=ting+definition'>ting</a> <a
+                href='https://www.google.com/search?q=tink+definition'>tink</a> <a
+                href='https://www.google.com/search?q=trag+definition'>trag</a> <a
+                href='https://www.google.com/search?q=tree+definition'>tree</a> <a
+                href='https://www.google.com/search?q=trek+definition'>trek</a> <a
+                href='https://www.google.com/search?q=tres+definition'>tres</a> <a
+                href='https://www.google.com/search?q=trig+definition'>trig</a> <a
+                href='https://www.google.com/search?q=trin+definition'>trin</a> <a
+                href='https://www.google.com/search?q=tshi+definition'>tshi</a> <a
+                href='https://www.google.com/search?q=tae+definition'>tae</a> <a
+                href='https://www.google.com/search?q=tag+definition'>tag</a> <a
+                href='https://www.google.com/search?q=tee+definition'>tee</a> <a
+                href='https://www.google.com/search?q=teg+definition'>teg</a> <a
+                href='https://www.google.com/search?q=ten+definition'>ten</a> <a
+                href='https://www.google.com/search?q=ter+definition'>ter</a> <a
+                href='https://www.google.com/search?q=the+definition'>the</a> <a
+                href='https://www.google.com/search?q=tie+definition'>tie</a> <a
+                href='https://www.google.com/search?q=tig+definition'>tig</a> <a
+                href='https://www.google.com/search?q=tin+definition'>tin</a> <a
+                href='https://www.google.com/search?q=tri+definition'>tri</a> <a
+                href='https://www.google.com/search?q=trs+definition'>trs</a> <a
+                href='https://www.google.com/search?q=tsi+definition'>tsi</a> <a
+                href='https://www.google.com/search?q=tsk+definition'>tsk</a>
+        </p>
+    </h4>
 </div>
 <!-- partial -->
 
